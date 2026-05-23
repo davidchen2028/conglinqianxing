@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>丛林潜行 — 迷雾与视野</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app">
+    <header class="title-bar">
+      <h1>丛林潜行</h1>
+      <p class="subtitle">迷彩军事写实 · 绕过手电筒扇形视野 · 偷取机密文件</p>
+    </header>
+
+    <main class="game-area">
+      <div id="hud" class="hud hidden">
+        <span>关卡 <strong id="level-name">—</strong></span>
+        <span id="objective">潜入并取得机密文件</span>
+      </div>
+
+      <canvas id="game-canvas"></canvas>
+
+      <div id="menu-screen" class="overlay">
+        <div class="panel">
+          <h2>任务简报</h2>
+          <ul class="controls">
+            <li><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> — 丛林内潜行移动</li>
+            <li>战争迷雾：未探索区域全黑，已探索但不在视野内变暗</li>
+            <li>敌人手电筒为<strong>圆锥形视野</strong>，被照到且视线无遮挡即失败</li>
+            <li>取得文件后返回<strong>绿色虚线</strong>起点撤离</li>
+          </ul>
+          <p class="tech-hint">
+            JS：<code>Fog of War</code> · 扇形 <code>atan2</code> + 距离角检测 ·
+            Python：Grid 二维数组经 <code>/api/levels</code> 加载
+          </p>
+          <div id="level-buttons" class="level-buttons"></div>
+        </div>
+      </div>
+
+      <div id="fail-screen" class="overlay hidden">
+        <div class="panel end-panel fail">
+          <h2>暴露</h2>
+          <p id="fail-msg">被手电筒发现！</p>
+          <button type="button" data-action="retry" class="btn primary">重新部署</button>
+          <button type="button" data-action="menu" class="btn">返回简报</button>
+        </div>
+      </div>
+
+      <div id="win-screen" class="overlay hidden">
+        <div class="panel end-panel win">
+          <h2>任务完成</h2>
+          <p>机密文件已安全撤离。</p>
+          <button type="button" data-action="retry" class="btn primary">再次潜入</button>
+          <button type="button" data-action="menu" class="btn">返回简报</button>
+        </div>
+      </div>
+    </main>
+
+    <footer class="tech-note">
+      <code>FogOfWar</code> 战争迷雾 ·
+      <code>isInCone</code> / <code>hasLineOfSight</code> 扇形 FOV ·
+      Flask <code>grid[][]</code> 关卡 API
+    </footer>
+  </div>
+
+  <script type="module" src="/static/js/game.js"></script>
+</body>
+</html>
